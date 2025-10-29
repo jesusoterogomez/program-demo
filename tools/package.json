@@ -11,5 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@inquirer/prompts": "^7.9.0"
+  },
+  "bin": {
+    "program-demo-cli": "cli.js"
   }
 }
