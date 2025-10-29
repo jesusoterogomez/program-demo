@@ -2,7 +2,7 @@ So,
 
 I have a completely different idea on how to get trainees to start assignments.
 
-It's probably insane, but I had an hour+ to kill and tried to figure out if it was possible:
+It's probably insane, but I had couple of hours to kill and tried to figure out if it was possible:
 
 What about instead of forking a repo, trainees:
 
