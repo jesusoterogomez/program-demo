@@ -3,35 +3,41 @@ import { mkdirSync } from "fs";
 import { join } from "path";
 
 export const checkoutCourse = (selectedCourse, config) => {
-  // Create course directory in current folder
-  mkdirSync(join(process.cwd(), selectedCourse));
-
-  // Clone the course repository without files into the course directory
-  // git -C to execute the command in the course directory without changing the current directory.
-  execSync(
-    `git -C ${join(process.cwd(), selectedCourse)} clone --no-checkout ${
-      config.repo
-    } ${join(process.cwd(), selectedCourse)}`,
-    {
-      stdio: "ignore",
-    }
+  // Get a temporary directory to do a sparse checkout into:
+  const tempDir = join(
+    tmpdir(),
+    `${config.repoName}-temp-checkout-course-${selectedCourse}`
   );
 
-  // Initialize sparse checkout in the course directory
-  execSync(
-    `git -C ${join(process.cwd(), selectedCourse)} sparse-checkout init --cone`,
-    {
-      stdio: "ignore",
-    }
-  );
+  console.log(`Cloning to ${tempDir}...`);
 
+  // Clone the course repository without files into the temporary directory
+  // git -C <path> clone --no-checkout <repo> <destination>
+  execSync(`git -C ${tempDir} clone --no-checkout ${config.repo} ${tempDir}`, {
+    stdio: "ignore",
+  });
+
+  // Initialize sparse checkout in the temporary directory
+  // git -C <path> sparse-checkout init --cone
+  execSync(`git -C ${tempDir} sparse-checkout init --cone`, {
+    stdio: "ignore",
+  });
+
+  const coursePath = `${config.folder}/${selectedCourse}`;
   // Set the sparse checkout to the assignment folder
-  execSync(
-    `git -C ${join(process.cwd(), selectedCourse)} sparse-checkout set ${
-      config.folder
-    }/${selectedCourse}`,
-    {
-      stdio: "ignore",
-    }
-  );
+  // git -C <path> sparse-checkout set <path/in/repo/to/checkout>
+  execSync(`git -C ${tempDir} sparse-checkout set ${coursePath}`, {
+    stdio: "ignore",
+  });
+
+  // Make a new directory for the course in the current directory.
+  mkdirSync(selectedCourse, { recursive: true });
+
+  // Copy the course files into the new directory.
+  execSync(`cp -r ${tempDir}/${coursePath} ${selectedCourse}`, {
+    stdio: "ignore",
+  });
+
+  // Cleanup the temporary directory
+  rmSync(tempDir, { recursive: true, force: true });
 };
