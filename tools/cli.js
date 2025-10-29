@@ -28,6 +28,10 @@ try {
 
   // Clone the selected course (WITH FILES) into the course directory
   checkoutCourse(selectedCourse, config);
+
+  console.log(
+    `Course module '${selectedCourse}' cloned to '${process.cwd()}/${selectedCourse}' - Happy coding :)`
+  );
 } catch (e) {
   console.error(e.message);
   process.exit(1);
