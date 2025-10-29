@@ -27,7 +27,7 @@ try {
   });
 
   // Clone the selected course (WITH FILES) into the course directory
-  checkoutCourse(selectedCourse, repo);
+  checkoutCourse(selectedCourse, config);
 } catch (e) {
   console.error(e.message);
   process.exit(1);

@@ -1,19 +1,17 @@
 import { execSync } from "child_process";
-import { mkdirSync } from "fs";
+import { mkdirSync, mkdtempSync } from "fs";
+import { tmpdir } from "os";
 import { join } from "path";
 
 export const checkoutCourse = (selectedCourse, config) => {
   // Get a temporary directory to do a sparse checkout into:
-  const tempDir = join(
-    tmpdir(),
-    `${config.repoName}-temp-checkout-course-${selectedCourse}`
-  );
+  const tempDir = mkdtempSync(join(tmpdir(), `${config.repoName}-checkout-`));
 
   console.log(`Cloning to ${tempDir}...`);
 
   // Clone the course repository without files into the temporary directory
-  // git -C <path> clone --no-checkout <repo> <destination>
-  execSync(`git -C ${tempDir} clone --no-checkout ${config.repo} ${tempDir}`, {
+  // git -C <path> clone --no-checkout <repo> . (dot means extract to that temp directory)
+  execSync(`git -C ${tempDir} clone --no-checkout ${config.repo} .`, {
     stdio: "ignore",
   });
 
