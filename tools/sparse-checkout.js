@@ -7,8 +7,6 @@ export const checkoutCourse = (selectedCourse, config) => {
   // Get a temporary directory to do a sparse checkout into:
   const tempDir = mkdtempSync(join(tmpdir(), `${config.repoName}-checkout-`));
 
-  console.log(`Cloning to ${tempDir}...`);
-
   // Clone the course repository without files into the temporary directory
   // git -C <path> clone --no-checkout <repo> . (dot means extract to that temp directory)
   execSync(`git -C ${tempDir} clone --no-checkout ${config.repo} .`, {
@@ -28,11 +26,16 @@ export const checkoutCourse = (selectedCourse, config) => {
     stdio: "ignore",
   });
 
+  // Checkout sparse files from specified branch
+  execSync(`git -C ${tempDir} checkout ${config.ref}`, {
+    stdio: "ignore",
+  });
+
   // Make a new directory for the course in the current directory.
   mkdirSync(selectedCourse, { recursive: true });
 
   // Copy the course files into the new directory.
-  execSync(`cp -r ${tempDir}/${coursePath} ${selectedCourse}`, {
+  execSync(`cp -r ${tempDir}/${coursePath} .`, {
     stdio: "ignore",
   });
 
