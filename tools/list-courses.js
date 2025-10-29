@@ -3,16 +3,19 @@ import { mkdtempSync, rmSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 
-export function listCourses(config, repo) {
+export function listCourses(config) {
   const { repoName, ref, folder } = config;
   // Create a temporary working directory
   const targetDir = mkdtempSync(join(tmpdir(), `${repoName}-temp-clone-`));
   // console.log(`Cloning to ${targetDir}...`);
 
   // Shallow clone without checking out files
-  execSync(`git clone --filter=blob:none --no-checkout ${repo} ${targetDir}`, {
-    stdio: "ignore",
-  });
+  execSync(
+    `git clone --filter=blob:none --no-checkout ${config.repo} ${targetDir}`,
+    {
+      stdio: "ignore",
+    }
+  );
 
   // List the folders inside the course directory
   const lsTreeOutput = execSync(
