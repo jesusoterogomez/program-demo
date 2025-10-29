@@ -44,7 +44,7 @@ try {
       // Remove folder name from the path
       return name.replace(new RegExp(`^${folder}/`), "");
     })
-    .filter((name) => Boolean(name));
+    .filter(Boolean);
 
   for (const name of folderNames) {
     console.log(name);

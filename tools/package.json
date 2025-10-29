@@ -1,0 +1,14 @@
+{
+  "name": "program-demo-cli",
+  "version": "0.0.1",
+  "description": "Clones assignments from program into the current directory",
+  "main": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@inquirer/prompts": "^7.9.0"
+  }
+}
