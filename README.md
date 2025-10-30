@@ -48,10 +48,10 @@ This is based on ideas I had when playing with these commands:
 git clone --filter=blob:none --no-checkout https://github.com/jesusoterogomez/program-demo.git /dir
 ```
 
-- Reading the file structure from the courses directory, with ls-tree to display list of course modules
+- Reading the file structure from the courses directory, with ls-tree to display list of course modules (works without actually checking out files)
 
 ```sh
-git -C temp-directory ls-tree origin/main course/
+git ls-tree origin/main course/
 ```
 
 - Selectively checking out files from a repo (To avoid downloading the entire repo every single time)
