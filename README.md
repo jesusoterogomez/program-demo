@@ -27,13 +27,15 @@ My idea is that, instead of forking a repo, trainees:
 - Use a CLI tool to start assignments:
   - This tool clones the required files for the specific assignment (assets, boilerplate, instructions, etc)
 
-Assumptions:
+Assumptions (probably wrong):
 
-- If trainees only copy the assignment of the current week before starting to work on it, it's unlikely they will need to update the source files. So copying before starting an assignment could make more sense that keeping a template in sync for the entire duration of the education.
+- Mentors might prompt trainees to update their forks if future assignments have been updated.
+- If trainees get only the latest version of an assignment, just before starting to work on it, it's unlikely they will need to update the source files. So copying before starting an assignment could make more sense that keeping a template in sync for the entire duration of the education.
 
 Downsides:
 - Maintenance
 - No git history for the assignment that was just cloned
+- [Insert your own]
 - Requires using command line, and being aware of the directory you're in before cloning
 
 ---
